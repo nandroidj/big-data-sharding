@@ -1,0 +1,142 @@
+version: '3'
+services: 
+
+    alfa01:
+        image: mongo
+        container_name: alfa01
+        hostname: alfa01
+        command: mongod --replSet alfa --shardsvr --bind_ip_all --port 27017
+        expose: 
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+
+    alfa02:
+        image: mongo
+        container_name: alfa02
+        hostname: alfa02
+        command: mongod --replSet alfa --shardsvr --bind_ip_all --port 27017
+        expose: 
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+
+    alfa03:
+        image: mongo
+        container_name: alfa03
+        hostname: alfa03
+        command: mongod --replSet alfa --shardsvr --bind_ip_all --port 27017
+        expose: 
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+
+    beta01:
+        image: mongo
+        container_name: beta01
+        hostname: beta01
+        command: mongod --replSet beta --shardsvr --bind_ip_all --port 27017
+        expose: 
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+
+    beta02:
+        image: mongo
+        container_name: beta02
+        hostname: beta02
+        command: mongod --replSet beta --shardsvr --bind_ip_all --port 27017
+        expose: 
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+
+    beta03:
+        image: mongo
+        container_name: beta03
+        hostname: beta03
+        command: mongod --replSet beta --shardsvr --bind_ip_all --port 27017
+        expose: 
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+
+    bigData01:
+        image: mongo
+        container_name: bigData01
+        hostname: bigData01
+        command: mongod --replSet bigData --shardsvr --bind_ip_all --port 27017
+        expose: 
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+
+    bigData02:
+        image: mongo
+        container_name: bigData02
+        hostname: bigData02
+        command: mongod --replSet bigData --shardsvr --bind_ip_all --port 27017
+        expose: 
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+
+    bigData03:
+        image: mongo
+        container_name: bigData03
+        hostname: bigData03
+        command: mongod --replSet bigData --shardsvr --bind_ip_all --port 27017
+        expose: 
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+
+    config01:
+        image: mongo
+        container_name: config01
+        hostname: config01
+        command: mongod --replSet config --configsvr --bind_ip_all --port 27019
+        expose: 
+            - '27019'
+        volumes: 
+            - ./scripts:/scripts
+
+    config02:
+        image: mongo
+        container_name: config02
+        hostname: config02
+        command: mongod --replSet config --configsvr --bind_ip_all --port 27019
+        expose: 
+            - '27019'
+        volumes: 
+            - ./scripts:/scripts
+
+    config03:
+        image: mongo
+        container_name: config03
+        hostname: config03
+        command: mongod --replSet config --configsvr --bind_ip_all --port 27019
+        expose: 
+            - '27019'
+        volumes: 
+            - ./scripts:/scripts
+
+    router:
+        image: mongo
+        container_name: router
+        hostname: router
+        command: mongos --configdb config/config01,config02,config03 --bind_ip_all --port 27017
+        expose:
+            - '27017'
+        volumes: 
+            - ./scripts:/scripts
+        depends_on: 
+            - alfa01
+            - alfa02
+            - alfa03
+            - beta01
+            - beta02
+            - beta03
+            - bigData01
+            - bigData02
+            - bigData03
